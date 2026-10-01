@@ -20,60 +20,58 @@ from models import (
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:4b")
 
-SYSTEM_PROMPT = """Ты — калькулятор еды и физической активности.
-Возвращай только JSON по переданной схеме и только числовые значения.
-Не добавляй советы, объяснения или текст. Если данных недостаточно и оценить
-значение нельзя, верни 0 в соответствующем поле. Если пользователь явно указал
-калории, сохрани это число без изменений.
+SYSTEM_PROMPT_EN = """You are a food and physical activity calculator.
+Return only JSON based on the provided schema, using only numerical values.
+Do not include advice, explanations, or text. If there is insufficient data 
+to estimate a value, return 0 in the corresponding field. If the user has 
+explicitly specified a calorie count, keep that number unchanged.
 """
-
 
 class OllamaActivityPayload(BaseModel):
     duration_minutes: float = Field(ge=0, le=1440)
     met: float = Field(ge=0, le=25)
 
 
-# Значения на 100 г: калории, белки, жиры, углеводы.
+# Values for 100g: calories, protein, fat, carbohydrates.
 FOOD_CATALOG: List[Tuple[str, Tuple[str, ...], float, float, float, float]] = [
-    ("гречка", ("гречк",), 110, 4.2, 1.1, 21.3),
-    ("куриная грудка", ("кур", "груд"), 165, 31.0, 3.6, 0.0),
-    ("рис", ("рис",), 130, 2.7, 0.3, 28.0),
-    ("овсянка", ("овсян",), 71, 2.5, 1.5, 12.0),
-    ("яйцо", ("яйц",), 155, 13.0, 11.0, 1.1),
-    ("банан", ("банан",), 89, 1.1, 0.3, 23.0),
-    ("яблоко", ("яблок",), 52, 0.3, 0.2, 14.0),
-    ("хлеб", ("хлеб",), 250, 8.0, 3.3, 49.0),
-    ("сыр", ("сыр",), 350, 25.0, 27.0, 2.0),
-    ("творог", ("творог",), 121, 17.0, 5.0, 1.8),
-    ("картофель", ("карто",), 87, 1.9, 0.1, 20.0),
-    ("говядина", ("говя",), 250, 26.0, 15.0, 0.0),
-    ("лосось", ("лосос",), 208, 20.0, 13.0, 0.0),
-    ("молоко", ("молок",), 52, 3.0, 2.5, 4.8),
-    ("кефир", ("кефир",), 53, 2.9, 2.5, 4.0),
-    ("масло", ("масл",), 899, 0.0, 99.9, 0.0),
+    ("oatmeal", ("oat",), 110, 4.2, 1.1, 21.3),
+    ("chicken breast", ("chicken", "breast"), 165, 31.0, 3.6, 0.0),
+    ("rice", ("rice",), 130, 2.7, 0.3, 28.0),
+    ("porridge", ("porridge",), 71, 2.5, 1.5, 12.0),
+    ("egg", ("egg",), 155, 13.0, 11.0, 1.1),
+    ("banana", ("banana",), 89, 1.1, 0.3, 23.0),
+    ("apple", ("apple",), 52, 0.3, 0.2, 14.0),
+    ("bread", ("bread",), 250, 8.0, 3.3, 49.0),
+    ("cheese", ("cheese",), 350, 25.0, 27.0, 2.0),
+    ("cottage cheese", ("cottage cheese",), 121, 17.0, 5.0, 1.8),
+    ("potato", ("potato",), 87, 1.9, 0.1, 20.0),
+    ("beef", ("beef",), 250, 26.0, 15.0, 0.0),
+    ("salmon", ("salmon",), 208, 20.0, 13.0, 0.0),
+    ("milk", ("milk",), 52, 3.0, 2.5, 4.8),
+    ("kefir", ("kefir",), 53, 2.9, 2.5, 4.0),
+    ("butter", ("butter",), 899, 0.0, 99.9, 0.0),
 ]
 
 # MET для распространённых активностей.
 ACTIVITY_CATALOG: List[Tuple[Tuple[str, ...], float]] = [
-    (("бег", "пробеж"), 8.3),
-    (("ходьб", "гуля", "шаг"), 3.5),
-    (("велосип",), 7.5),
-    (("силов", "тренаж", "штанг", "гантел"), 6.0),
-    (("плав", "бассейн"), 6.0),
-    (("йог",), 2.5),
-    (("уборк",), 3.3),
-    (("футбол",), 7.0),
-    (("баскетбол",), 6.5),
-    (("лестниц",), 8.0),
+    (("running", "jogging"), 8.3),
+    (("walking", "hiking", "stepping"), 3.5),
+    (("cycling",), 7.5),
+    (("strength training", "gym", "barbell", "dumbbell"), 6.0),
+    (("swimming", "pool"), 6.0),
+    (("yoga",), 2.5),
+    (("cleaning",), 3.3),
+    (("football",), 7.0),
+    (("basketball",), 6.5),
+    (("stairs",), 8.0),
 ]
-
 
 def _ollama_chat(prompt: str, schema: Dict) -> str:
     body = {
         "model": OLLAMA_MODEL,
         "stream": False,
         "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": SYSTEM_PROMPT_EN},
             {"role": "user", "content": prompt},
         ],
         "format": schema,
@@ -148,13 +146,13 @@ def _normalize_nutrition(
 
 async def estimate_food(description: str) -> NutritionEstimate:
     explicit_calories = _explicit_calories(description)
-    prompt = f"""Определи суммарную пищевую ценность описанной еды.
-Описание: {description}
+    prompt = f"""Determine the total nutritional value of the described food.
+Description: {description}
 
-Поля ответа: calories, protein_g, fat_g, carbs_g.
-Если калории прямо написаны пользователем, calories должно быть равно этому числу.
-Если КБЖУ неизвестно, оцени его по типичному составу блюда. Если оценка невозможна,
-верни 0 в неизвестных полях.
+Response fields: calories, protein_g, fat_g, carbs_g.
+If calories are explicitly written by the user, calories should be equal to that number.
+If the macronutrient values are unknown, estimate them based on the typical composition of the dish. If estimation is not possible,
+return 0 in the unknown fields.
 """
     try:
         raw = await asyncio.to_thread(
@@ -257,10 +255,10 @@ async def estimate_activity(data: ActivityEstimateRequest) -> ActivityEstimate:
 
 
 def estimate_steps(data: StepsEstimateRequest) -> StepsEstimate:
-    # Средняя длина шага приблизительно равна 41.4% роста.
+    # The average stride length is approximately equal to 41.4% of body height.
     step_length_m = data.height_cm * 0.414 / 100.0
     distance_km = data.steps * step_length_m / 1000.0
-    # При ходьбе расход около 0.5 ккал на кг массы на километр.
+    # The average calorie burn while walking is about 0.5 kcal per kg of body weight per kilometer.
     calories = 0.5 * data.weight_kg * distance_km
     return StepsEstimate(
         calories_burned=round(calories, 1),

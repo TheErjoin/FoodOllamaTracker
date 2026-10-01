@@ -17,10 +17,9 @@ from nutrition_service import (
     estimate_steps,
 )
 
-
 app = FastAPI(
-    title="Локальный AI-калькулятор",
-    description="Числовая оценка еды, активности и шагов",
+    title="Local AI Calculator",
+    description="Numerical evaluation of food, activity, and steps",
     version="0.3.0",
 )
 
@@ -31,7 +30,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/")
 def home():

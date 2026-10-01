@@ -7,7 +7,7 @@ class FoodEstimateRequest(BaseModel):
     description: str = Field(
         min_length=1,
         max_length=2000,
-        description="Что съел пользователь",
+        description="What the user ate",
     )
 
 
@@ -22,7 +22,7 @@ class ActivityEstimateRequest(BaseModel):
     description: str = Field(
         min_length=1,
         max_length=1000,
-        description="Например: быстрая ходьба 45 минут",
+        description="For example: fast walking for 45 minutes, or cycling for 30 minutes",
     )
     weight_kg: float = Field(gt=25, le=350)
     duration_minutes: Optional[float] = Field(default=None, gt=0, le=1440)
