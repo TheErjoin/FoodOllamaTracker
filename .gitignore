@@ -1,3 +1,4 @@
+# Backend
 .venv/
 __pycache__/
 *.py[cod]
@@ -6,3 +7,18 @@ __pycache__/
 graphify-out/
 ARCHITECTURE.md
 README.md
+
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# macOS
+.DS_Store
