@@ -76,8 +76,8 @@ kotlin {
         )
     }
 }
-//
-//dependencies {
-//
-//    implementation(projectsWorkaround.core.presentation)
-//}
+
+dependencies {
+
+    implementation(projectsWorkaround.core.presentation)
+}

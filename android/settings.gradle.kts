@@ -26,3 +26,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "FoodOllamaTracker"
 include(":app")
+include(
+    ":core:data",
+    ":core:domain",
+    ":core:presentation"
+)
