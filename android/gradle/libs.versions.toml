@@ -1,0 +1,112 @@
+[versions]
+agp = "8.13.1"
+kotlin = "2.2.21"
+coreKtx = "1.17.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+lifecycleRuntimeKtx = "2.9.4"
+activityCompose = "1.12.0"
+composeBom = "2024.09.00"
+composeNavigation = "2.9.6"
+kotlinx-serialization = "1.11.0"
+kotlinx-coroutines = "1.11.0"
+
+ksp = "2.3.2"
+dagger = "2.57.2"
+daggerNavigationCompose = "1.3.0"
+hilt-extenions = "1.4.0"
+cameraX = "1.5.1"
+room = "2.8.4"
+appcompat = "1.7.1"
+material = "1.13.0"
+jetbrainsKotlinJvmVersion = "2.2.21"
+material3 = "1.4.0"
+cameraView = "1.5.2"
+retrofit = "3.0.0"
+okHttp = "5.3.2"
+
+[libraries]
+# Only for build-logic
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+
+#Lifecycle
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+#Compose
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "daggerNavigationCompose" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-core" }
+
+#Kotlin
+## Serialization
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+## Coroutines
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Javax
+# [javax.inject package](https://docs.oracle.com/javaee/6/api/javax/inject/package-summary.html)
+# [JSR-330](https://javax-inject.github.io/javax-inject/)
+javax-inject = { module = "javax.inject:javax.inject", version = "1" }
+
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+hilt-extensions = { module = "it.czerwinski.android.hilt:hilt-extensions", version.ref = "hilt-extenions" }
+hilt-extensions-processor = { module = "it.czerwinski.android.hilt:hilt-processor-ksp", version.ref = "hilt-extenions" }
+
+#Network
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofit-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+
+# OkHttp
+okHttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp" }
+okHttp = { module = "com.squareup.okhttp3:okhttp" }
+okHttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+
+#CameraX
+camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX" }
+
+# Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+#Test
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+
+# Conventions
+convention-kotlin-library = { id = "kotlin-library-conventions", version = "1.0" }
+convention-android-app = { id = "android-app-conventions", version = "1.0" }
+convention-android-library = { id = "android-library-conventions", version = "1.0" }
+convention-android-feature = { id = "android-feature-conventions", version = "1.0" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvmVersion" }
