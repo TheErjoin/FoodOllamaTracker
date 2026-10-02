@@ -15,13 +15,10 @@ import com.sadistictech.profile.router.ProfileScreenRouter.profileNavGraph
 import com.sadistictech.settings.router.SettingsScreenRouter.settingsNavGraph
 
 @Composable
-fun NavGraph(
-    navController: NavHostController,
-) {
+fun NavGraph(navController: NavHostController) {
     val startDestination = HomeScreenRouter.ROUTE
-    NavDrawer(
-        navController = navController,
-    ) {
+
+    NavDrawer(navController = navController) {
         NavHost(
             navController = navController,
             startDestination = startDestination,

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calories_title">Калории</string>
+    <string name="steps_title">Шаги</string>
+
+    <string name="food_section_title">Питание</string>
+    <string name="food_field_label">Что вы съели?</string>
+    <string name="food_field_placeholder">Например: овсянка с бананом</string>
+    <string name="activity_section_title">Активность</string>
+    <string name="activity_field_label">Чем вы занимались?</string>
+    <string name="activity_field_placeholder">Например: прогулка 30 минут</string>
+
+    <string name="clear_field">Очистить поле</string>
+    <string name="character_counter">%1$d из %2$d</string>
+</resources>
