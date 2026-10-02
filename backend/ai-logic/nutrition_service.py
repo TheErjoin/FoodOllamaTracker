@@ -52,7 +52,7 @@ FOOD_CATALOG: List[Tuple[str, Tuple[str, ...], float, float, float, float]] = [
     ("butter", ("butter",), 899, 0.0, 99.9, 0.0),
 ]
 
-# MET для распространённых активностей.
+# MET for common activities.
 ACTIVITY_CATALOG: List[Tuple[Tuple[str, ...], float]] = [
     (("running", "jogging"), 8.3),
     (("walking", "hiking", "stepping"), 3.5),
@@ -89,13 +89,13 @@ def _ollama_chat(prompt: str, schema: Dict) -> str:
             payload = json.loads(response.read().decode("utf-8"))
     except HTTPError as error:
         details = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Ollama вернул ошибку {error.code}: {details}") from error
+        raise RuntimeError(f"Ollama returned error {error.code}: {details}") from error
     except (URLError, TimeoutError) as error:
-        raise RuntimeError("Ollama недоступна") from error
+        raise RuntimeError("Ollama is not available") from error
 
     content = payload.get("message", {}).get("content")
     if not content:
-        raise RuntimeError("Ollama вернула пустой ответ")
+        raise RuntimeError("Ollama return empty content")
     return content.strip()
 
 
@@ -105,7 +105,7 @@ def _zero_nutrition() -> NutritionEstimate:
 
 def _explicit_calories(text: str) -> Optional[float]:
     match = re.search(
-        r"(\d+(?:[.,]\d+)?)\s*(?:ккал|кал+ори(?:й|я|и)?)",
+        r"(\d+(?:[.,]\d+)?)\s*(?:calories?)",
         text.lower(),
     )
     if not match:
@@ -128,7 +128,7 @@ def _normalize_nutrition(
     fat = value.fat_g
     carbs = value.carbs_g
 
-    # Если калории заданы явно, приводим примерное КБЖУ к той же энергетической сумме.
+    # If explicit calories are provided, adjust the estimated macronutrients to match the same energy total.
     macro_calories = protein * 4 + fat * 9 + carbs * 4
     if explicit_calories is not None and explicit_calories > 0 and macro_calories > 0:
         factor = explicit_calories / macro_calories
@@ -232,11 +232,11 @@ def _activity_result(weight_kg: float, duration_minutes: float, met: float):
 
 
 async def estimate_activity(data: ActivityEstimateRequest) -> ActivityEstimate:
-    prompt = f"""Определи только длительность и MET физической активности.
-Описание: {data.description}
-Переданная длительность: {data.duration_minutes}
+    prompt = f"""Determine only the duration and MET of the physical activity.
+Description: {data.description}
+Provided duration: {data.duration_minutes}
 
-Верни duration_minutes и met. Если определить значение нельзя, верни 0.
+Return duration_minutes and met. If the value cannot be determined, return 0.
 """
     try:
         raw = await asyncio.to_thread(
