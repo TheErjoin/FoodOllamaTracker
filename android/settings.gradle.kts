@@ -31,3 +31,8 @@ include(
     ":core:domain",
     ":core:presentation"
 )
+include(":features")
+include(":features:home")
+include(":features:settings")
+include(":features:onboarding")
+include(":features:profile")
