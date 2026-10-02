@@ -2,6 +2,18 @@ plugins {
     alias(libs.plugins.convention.android.library)
 }
 
+android {
+    buildTypes {
+        release {
+            buildConfigField("String", "BASE_URL", AndroidConfig.BASE_URL)
+        }
+
+        debug {
+            buildConfigField("String", "BASE_URL", AndroidConfig.BASE_URL)
+        }
+    }
+}
+
 dependencies {
 
     // Modules

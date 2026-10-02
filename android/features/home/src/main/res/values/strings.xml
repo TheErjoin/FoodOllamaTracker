@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="today_title">Сегодня</string>
     <string name="calories_title">Калории</string>
     <string name="steps_title">Шаги</string>
 
@@ -9,6 +10,21 @@
     <string name="activity_section_title">Активность</string>
     <string name="activity_field_label">Чем вы занимались?</string>
     <string name="activity_field_placeholder">Например: прогулка 30 минут</string>
+
+    <string name="estimate_food">Рассчитать еду</string>
+    <string name="estimate_activity">Рассчитать активность</string>
+    <string name="estimate_test_steps">Рассчитать 10 000 шагов</string>
+    <string name="request_in_progress">Считаю…</string>
+    <string name="test_profile_hint">Тестовый расчёт для веса %1$d кг</string>
+
+    <string name="food_result">%1$s ккал · Б %2$s г · Ж %3$s г · У %4$s г</string>
+    <string name="activity_result">Сожжено %1$s ккал · %2$s мин · MET %3$s</string>
+    <string name="steps_result">Расстояние %1$s км · сожжено %2$s ккал</string>
+
+    <string name="error_timeout">Сервер не успел ответить. Убедитесь, что Ollama запущена, и попробуйте ещё раз.</string>
+    <string name="error_invalid_input">Проверьте введённые данные.</string>
+    <string name="error_server">Сервер вернул ошибку.</string>
+    <string name="error_unexpected">Не удалось выполнить запрос.</string>
 
     <string name="clear_field">Очистить поле</string>
     <string name="character_counter">%1$d из %2$d</string>

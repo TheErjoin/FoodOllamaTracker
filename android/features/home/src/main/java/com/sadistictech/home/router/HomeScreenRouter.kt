@@ -10,7 +10,7 @@ object HomeScreenRouter {
 
     fun NavGraphBuilder.homeNavGraph() {
         composable(route = ROUTE) {
-            HomeScreen()
+            HomeScreen(viewModel = hiltViewModel())
         }
     }
 }
